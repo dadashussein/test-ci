@@ -1,0 +1,33 @@
+version: "1.0"
+name: Node.js Build Pipeline
+environment:
+  NODE_ENV: production
+
+stages:
+  - name: Build
+    steps:
+      - name: System Info
+        image: node:20
+        commands:
+          - node -v
+          - npm -v
+          - git --version
+          - echo "Build started"
+
+      - name: Install Dependencies
+        image: node:20
+        commands:
+          - npm install
+          - echo "Dependencies installed"
+
+      - name: Run Tests
+        image: node:20
+        commands:
+          - npm test
+        allow_failure: true
+
+      - name: Build Application
+        image: node:20
+        commands:
+          - npm run build
+          - echo "Build completed successfully"
